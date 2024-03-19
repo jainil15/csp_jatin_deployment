@@ -8,6 +8,8 @@
 # testing
 /coverage
 
+/Feature Report
+
 # production
 /build
 
