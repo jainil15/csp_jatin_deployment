@@ -526,10 +526,10 @@ const alterVersionHistory = async (req, res) => {
   try {
     // Filtering records to identify added/updated and deleted records separately
     const { id } = req.params;
-    const updatedRecords = req.body.filter((record) => {
+    let updatedRecords = req.body.filter((record) => {
       return record.action === "added/updated";
     });
-    const deletedRecords = req.body.filter((record) => {
+    let deletedRecords = req.body.filter((record) => {
       return record.action === "delete";
     });
 
@@ -570,10 +570,10 @@ const alterAuditHistory = async (req, res) => {
   try {
     // Filtering records to identify added/updated and deleted records separately
     const { id } = req.params;
-    const updatedRecords = req.body.filter((record) => {
+    let updatedRecords = req.body.filter((record) => {
       return record.action === "added/updated";
     });
-    const deletedRecords = req.body.filter((record) => {
+    let deletedRecords = req.body.filter((record) => {
       return record.action === "delete";
     });
 
@@ -672,10 +672,10 @@ const alterEscalationMatrix = async (req, res) => {
     const { id } = req.params;
 
     // Filtering records to identify added/updated and deleted records separately
-    const updatedRecords = req.body.filter((record) => {
+    let updatedRecords = req.body.filter((record) => {
       return record.action === "added/updated";
     });
-    const deletedRecords = req.body.filter((record) => {
+    let deletedRecords = req.body.filter((record) => {
       return record.action === "delete";
     });
 
@@ -726,10 +726,10 @@ const alterRiskProfiling = async (req, res) => {
   try {
     // Filtering records to identify added/updated and deleted records separately
     const { id } = req.params;
-    const updatedRecords = req.body.filter((record) => {
+    let updatedRecords = req.body.filter((record) => {
       return record.action === "added/updated";
     });
-    const deletedRecords = req.body.filter((record) => {
+    let deletedRecords = req.body.filter((record) => {
       return record.action === "delete";
     });
 
@@ -780,10 +780,10 @@ const alterPhases = async (req, res) => {
   try {
     // Filter records to identify added/updated and deleted records separately
     const { id } = req.params;
-    const updatedRecords = req.body.filter((record) => {
+    let updatedRecords = req.body.filter((record) => {
       return record.action === "added/updated";
     });
-    const deletedRecords = req.body.filter((record) => {
+    let deletedRecords = req.body.filter((record) => {
       return record.action === "delete";
     });
 
@@ -836,10 +836,10 @@ const alterSprintDetails = async (req, res) => {
     const { id } = req.params;
 
     // Filtering records to identify added/updated and deleted records separately
-    const updatedRecords = req.body.filter((record) => {
+    let updatedRecords = req.body.filter((record) => {
       return record.action === "added/updated";
     });
-    const deletedRecords = req.body.filter((record) => {
+    let deletedRecords = req.body.filter((record) => {
       return record.action === "delete";
     });
 
@@ -889,10 +889,10 @@ const alterResources = async (req, res) => {
   try {
     const { id } = req.params;
     // Filtering records to identify added/updated and deleted records separately
-    const updatedRecords = req.body.filter((record) => {
+    let updatedRecords = req.body.filter((record) => {
       return record.action === "added/updated";
     });
-    const deletedRecords = req.body.filter((record) => {
+    let deletedRecords = req.body.filter((record) => {
       return record.action === "delete";
     });
 
@@ -942,10 +942,10 @@ const alterApprovedTeams = async (req, res) => {
   try {
     // Filtering records to identify added/updated and deleted records separately
     const { id } = req.params;
-    const updatedRecords = req.body.filter((record) => {
+    let updatedRecords = req.body.filter((record) => {
       return record.action === "added/updated";
     });
-    const deletedRecords = req.body.filter((record) => {
+    let deletedRecords = req.body.filter((record) => {
       return record.action === "delete";
     });
 
@@ -995,10 +995,10 @@ const alterClientFeedback = async (req, res) => {
   try {
     // Filtering records to identify added/updated and deleted records separately
     const { id } = req.params;
-    const updatedRecords = req.body.filter((record) => {
+    let updatedRecords = req.body.filter((record) => {
       return record.action === "added/updated";
     });
-    const deletedRecords = req.body.filter((record) => {
+    let deletedRecords = req.body.filter((record) => {
       return record.action === "delete";
     });
 
@@ -1048,10 +1048,10 @@ const alterMoMs = async (req, res) => {
   try {
     // Filtering records to identify added/updated and deleted records separately
     const { id } = req.params;
-    const updatedRecords = req.body.filter((record) => {
+    let updatedRecords = req.body.filter((record) => {
       return record.action === "added/updated";
     });
-    const deletedRecords = req.body.filter((record) => {
+    let deletedRecords = req.body.filter((record) => {
       return record.action === "delete";
     });
 
@@ -1097,10 +1097,10 @@ const alterProjectUpdates = async (req, res) => {
   try {
     // Filtering records to identify added/updated and deleted records separately
     const { id } = req.params;
-    const updatedRecords = req.body.filter((record) => {
+    let updatedRecords = req.body.filter((record) => {
       return record.action === "added/updated";
     });
-    const deletedRecords = req.body.filter((record) => {
+    let deletedRecords = req.body.filter((record) => {
       return record.action === "delete";
     });
 
