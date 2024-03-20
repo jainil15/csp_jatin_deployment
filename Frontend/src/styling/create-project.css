@@ -5,6 +5,11 @@
   box-sizing: border-box;
 }
 
+.new-project-wrapper {
+  overflow: auto;
+  height: 100%;
+}
+
 /* Styling for a container box */
 .box {
   width: 80%; /* Setting width */
@@ -30,6 +35,10 @@
 /* Styling for heading container */
 .heading {
   margin: 20px; /* Setting margin */
+}
+
+.box1 {
+  height: fit-content;
 }
 
 /* Styling for buttons inside box2 */

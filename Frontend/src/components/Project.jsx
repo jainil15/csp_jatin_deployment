@@ -95,7 +95,7 @@ const Project = () => {
         </div>
 
         {/* Container for project sections */}
-        <Box className="project-section-box">
+        <div className="project-section-box">
           {/* Tab panels */}
           <TabPanels activeTabId={activeTab}>
             {/* Individual tab panels */}
@@ -151,7 +151,7 @@ const Project = () => {
               <Project_Resources_Section />
             </TabPanel>
           </TabPanels>
-        </Box>
+        </div>
       </Flex>
     </Box>
   );

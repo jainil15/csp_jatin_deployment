@@ -2,9 +2,10 @@
 .navigation-tab {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Setting font family */
   border-radius: 8px; /* Applying border radius */
-  overflow: hidden; /* Hiding overflow */
+  overflow: auto; /* Hiding overflow */
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Applying box shadow */
   height: 75%; /* Setting height */
+  padding-bottom: 20px;
 }
 
 /* Styling for the navigation bar */
@@ -49,7 +50,8 @@
   width: 100%; /* Full width */
   border-collapse: collapse; /* Collapsing table borders */
   border-radius: 8px; /* Border radius */
-  overflow: hidden; /* Hiding overflow */
+  overflow: auto; /* Hiding overflow */
+  margin-bottom: 10px;
 }
 
 /* Styling for table header and data cells */
