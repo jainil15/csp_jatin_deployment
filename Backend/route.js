@@ -129,5 +129,9 @@ router
   .get(getProjectUpdates) // GET request to fetch project updates data
   .post(alterProjectUpdates); // POST request to alter project updates data
 
+
+router.route("/edit-access/:user_id").get().post()
+
+
 // Exporting the router module
 module.exports = router;
