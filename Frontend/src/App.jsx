@@ -7,6 +7,7 @@ import Home from "./components/Home";
 import Project from "./components/Project";
 import CreateProject from "./components/CreateProject";
 import CreateUser from "./components/CreateUser";
+import UpdateUserPassword from "./components/UpdateUserPassword";
 
 // Main component defining the application routes
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
       {/* Route for login page */}
       <Route path="/login" element={<Login />}></Route>
 
+      <Route path="/createUserLogin/?" element={<UpdateUserPassword />}></Route>
       {/* Protected routes */}
       <Route path="/" element={<ProtectedRoute />}>
         {/* Layout component containing navigation */}
