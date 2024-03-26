@@ -60,17 +60,22 @@
 }
 
 /* Styles for the export button container */
-.export-button-container {
+.action-button-container {
   width: 90%; /* Set the width of the container */
   margin: 4px auto; /* Add margin */
   display: flex; /* Use flexbox for layout */
   justify-content: end; /* Align content to the end */
   padding: 10px; /* Add padding */
+  gap: 10px;
+}
+.action-button-container button {
+  padding: 6px 20px;
+  font-size: x-large;
+  font-weight: 700;
 }
 
 /* Styles for the export button */
 .export-button {
-  border: 0.5px solid black; /* Add a thin solid border */
   background-color: #007bff; /* Set the background color to a shade of blue */
   border-radius: 5px; /* Apply a border radius for rounded corners */
   cursor: pointer; /* Change the cursor to a pointer on hover */
