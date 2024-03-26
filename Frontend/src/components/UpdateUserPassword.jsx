@@ -2,27 +2,39 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import "../styling/update-user-password.css";
 import { toast, ToastContainer } from "react-toastify";
+import { updateUserPassword } from "../util/users";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const CreateUserLogin = () => {
+  const { logout } = useAuth0();
   const [queryParameters] = useSearchParams();
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showNavigateButton, setShowNavigateButton] = useState(false);
+  console.log(decodeURIComponent(queryParameters.get("userId")));
 
   useEffect(() => {
-    if (queryParameters.size != 1 || !queryParameters.get("email")) {
-      //console.log(queryParameters.size);
+    if (
+      queryParameters.size != 2 ||
+      !queryParameters.get("email") ||
+      !queryParameters.get("userId")
+    ) {
       navigate("/login");
     }
   }, []);
 
-  const handleCreateAccount = () => {
+  const handleCreateAccount = async () => {
     console.log(password, confirmPassword, password !== confirmPassword);
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
       return;
     } else {
+      const response = await updateUserPassword(
+        password,
+        queryParameters.get("userId")
+      );
+      console.log(response);
       toast.success("Password Updated Successfully");
       setShowNavigateButton(true);
     }
@@ -45,7 +57,13 @@ const CreateUserLogin = () => {
         {/* {queryParameters.get("name")} {queryParameters.get("email")} */}
         {showNavigateButton ? (
           <div className="create-user-account-button-container">
-            <button onClick={() => navigate("/login")} className="login-button">
+            <button
+              onClick={() => {
+                logout();
+                navigate("/login");
+              }}
+              className="login-button"
+            >
               Navigate to Login Page
             </button>
           </div>
