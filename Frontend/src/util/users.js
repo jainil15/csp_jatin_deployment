@@ -137,6 +137,38 @@ const assignRoleToUser = async (user_id, user_role) => {
   }
 };
 
+export const updateUserPassword = async (password, user_id) => {
+  try {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Authorization", `Bearer ${MGMT_TOKEN}`);
+
+    var raw = JSON.stringify({
+      password: password,
+      connection: process.env.REACT_APP_CONNECTION,
+    });
+
+    var requestOptions = {
+      method: "PATCH",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    let response = await fetch(
+      `https://dev-34crl0ebsqxu7bk8.us.auth0.com/api/v2/users/${user_id}`,
+      requestOptions
+    );
+    response = await response.json();
+    console.log(response);
+    return { status: "success", message: "Password Updated Successfully" };
+  } catch (error) {
+    console.log(error);
+    return { status: "error", message: "Some Error Occurred" };
+  }
+};
+
 // Function to create a new user in Auth0
 export const createNewUser = async (user, role) => {
   try {
@@ -157,7 +189,7 @@ export const createNewUser = async (user, role) => {
       name: user.name,
       nickname: "string",
       user_id: `${user._id ? user._id.split("|")[1] : uuidv4()}`, // Generate a unique user ID
-      connection: "Username-Password-Authentication",
+      connection: process.env.REACT_APP_CONNECTION,
       password: user_password, // Set the generated password
       verify_email: false,
     });
@@ -178,7 +210,7 @@ export const createNewUser = async (user, role) => {
     }
     const created_user = await response.json();
     assignRoleToUser(created_user.user_id, role); // Assign role to the created user
-    sendInviteMail({ email: user.email, password: user_password }); // Send invitation email to the user
+    sendInviteMail({ email: user.email, user_id: created_user.user_id }); // Send invitation email to the user
     return { status: "success", message: "User Created Successfully" };
   } catch (error) {
     console.log(error);
