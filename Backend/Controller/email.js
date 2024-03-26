@@ -63,7 +63,7 @@ const generateEmailTemplate = (stakeholder_name, audit_history) => {
   return email_template;
 };
 //Function to generate user invitation mail
-const generateInviteEmailTemplate = (email) => {
+const generateInviteEmailTemplate = (email, user_id) => {
   let email_template = `
   <html>
     
@@ -74,7 +74,7 @@ const generateInviteEmailTemplate = (email) => {
     <h4>Your account for Customer Success has been created. Use below link to update your password:</h4>
     <br>
     <br>
-    <h4><a href="${process.env.APP_CLIENT_URL}/createUserLogin/?email=${email}">Change Password</a></h4>
+    <h4><a href="${process.env.APP_CLIENT_URL}/createUserLogin/?email=${email}&userId=${user_id}">Change Password</a></h4>
     <h3>Thanks and Regards,</h3>
     <h3>Promact Infotech Pvt Ltd</h3>
 
@@ -136,7 +136,7 @@ const sendMail = async (req, res) => {
 //Function to send User Invitation Mail
 const sendInviteEmail = (req, res) => {
   try {
-    const { email } = req.body;
+    const { email, user_id } = req.body;
     console.log(req.body);
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -159,7 +159,7 @@ const sendInviteEmail = (req, res) => {
         to: `${email}`,
         subject: "Set Your Account Password for Customer Success",
         // Generating email body using generateInviteEmailTemplate function
-        html: generateInviteEmailTemplate(email),
+        html: generateInviteEmailTemplate(email, user_id),
       });
     }
 
