@@ -22,7 +22,7 @@ const TopBar = () => {
             </Box>
             <Box className="company-name-container">
               {/* Container for the company name */}
-              <label>Customer Support</label> {/* Company name */}
+              <label>Customer Success</label> {/* Company name */}
             </Box>
           </Flex>
         </Box>
