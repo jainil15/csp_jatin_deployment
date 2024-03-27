@@ -31,6 +31,9 @@ const {
   alterClientFeedback, // Alters client feedback data
   alterMoMs, // Alters minutes of meeting data
   alterProjectUpdates, // Alters project updates data
+  alterEditRequest,
+  getEditRequest,
+  getProjectEditRequest,
 } = require("./Controller/Project.js");
 
 const { generatePDF } = require("./Controller/genPDF.js"); // Importing function for generating PDF files
@@ -129,9 +132,12 @@ router
   .get(getProjectUpdates) // GET request to fetch project updates data
   .post(alterProjectUpdates); // POST request to alter project updates data
 
+router
+  .route("/edit-request/:user_id")
+  .get(getEditRequest)
+  .post(alterEditRequest);
 
-router.route("/edit-access/:user_id").get().post()
-
+router.route("/project-edit-request/:project_id").get(getProjectEditRequest);
 
 // Exporting the router module
 module.exports = router;
