@@ -191,6 +191,7 @@ const RequestAccess = () => {
         draggable
         pauseOnHover
         theme="light"
+        style={{ minWidth: "fit-content" }}
       />
       {auth.role == "Admin" || auth.role == "Manager" ? (
         <div>{generateRequestTable()}</div>

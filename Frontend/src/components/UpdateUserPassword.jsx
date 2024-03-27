@@ -52,6 +52,7 @@ const CreateUserLogin = () => {
         draggable
         pauseOnHover
         theme="light"
+        style={{ minWidth: "fit-content" }}
       />
       <div className="create-user-login-form">
         {/* {queryParameters.get("name")} {queryParameters.get("email")} */}
