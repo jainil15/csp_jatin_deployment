@@ -82,10 +82,10 @@ const Project = () => {
               setShowRequests(!showRequests);
             }}
           >
-            {showRequests ? <FaUserLock /> : <RxCross2 />}
+            {showRequests ? <RxCross2 /> : <FaUserLock />}
           </button>
         </div>
-        {!showRequests ? (
+        {showRequests ? (
           <RequestAccess />
         ) : (
           <>
