@@ -73,7 +73,6 @@ const generateInviteEmailTemplate = (email, user_id) => {
 
     <h4>Your account for Customer Success has been created. Use below link to update your password:</h4>
     <br>
-    <br>
     <h4><a href="${process.env.APP_CLIENT_URL}/createUserLogin/?email=${email}&userId=${user_id}">Change Password</a></h4>
     <h3>Thanks and Regards,</h3>
     <h3>Promact Infotech Pvt Ltd</h3>
