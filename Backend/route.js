@@ -34,6 +34,7 @@ const {
   alterEditRequest,
   getEditRequest,
   getProjectEditRequest,
+  deleteProject,
 } = require("./Controller/Project.js");
 
 const { generatePDF } = require("./Controller/genPDF.js"); // Importing function for generating PDF files
@@ -138,6 +139,8 @@ router
   .post(alterEditRequest);
 
 router.route("/project-edit-request/:project_id").get(getProjectEditRequest);
+
+router.route("/project-delete/:project_id").delete(deleteProject);
 
 // Exporting the router module
 module.exports = router;

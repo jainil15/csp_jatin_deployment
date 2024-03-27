@@ -1185,6 +1185,40 @@ const alterEditRequest = async (req, res) => {
   }
 };
 
+const deleteProject = async (req, res) => {
+  try {
+    const { project_id } = req.params;
+
+    const schemas = [
+      edit_requests,
+      project_updates,
+      mom,
+      approved_team,
+      client_feedback,
+      resources,
+      risk_profiling,
+      escalation_matrix,
+      phases,
+      stakeholders,
+      sprint_details,
+      version_history,
+      audit_history,
+    ];
+
+    for (let i = 0; i < schemas.length; i++) {
+      const response = await schemas[i].deleteMany({ project_id: project_id });
+      console.log(response);
+    }
+
+    const projectDeleteResponse = await project.deleteOne({ _id: project_id });
+    console.log(projectDeleteResponse);
+
+    res.json({});
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // Exporting the functions to be used in other parts of the application
 
 module.exports = {
@@ -1222,4 +1256,6 @@ module.exports = {
   alterResources, // Alters resources data
   addProject, // Adds a new project
   alterEditRequest,
+
+  deleteProject,
 };
