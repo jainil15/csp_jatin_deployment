@@ -12,6 +12,7 @@ const Project_Risk_Profiling_Section = () => {
   const [riskProfiling, setRiskProfiling] = useState([]); // State to manage risk profiling data
   const [changedTableRows, setChangedTableRows] = useState([]); // State to manage changed table rows
   const [showSaveButton, setShowSaveButton] = useState(false); // State to control the visibility of the save button
+  const [allowedUsers, setAllowedUsers] = useState([]);
 
   // Retrieve the base URL from environment variables
   const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -43,6 +44,20 @@ const Project_Risk_Profiling_Section = () => {
       const { data } = await response.json();
       // Setting fetched risk profiling data to state variable
       setRiskProfiling(data);
+
+      const project_id = PATH_NAME.split("/")[2];
+      const allowedUsersResponse = await axios.get(
+        `${BASE_URL}/project-edit-request/${project_id}`
+      );
+      let { data: users } = allowedUsersResponse;
+      users = users.data;
+      users = users.filter((user) => user.status == "approved");
+
+      setAllowedUsers(() => {
+        return users.map((user) => {
+          return user.user_id;
+        });
+      });
     } catch (error) {
       // Displaying error message using toast notification
       toast.error("Some Error");
@@ -70,6 +85,7 @@ const Project_Risk_Profiling_Section = () => {
         {/* Render the Table component if risk profiling data is available */}
         {riskProfiling.length > 0 && (
           <Table
+            allowedUsers={allowedUsers}
             // Default values for the table
             defaultValues={{
               project_id: riskProfiling[0].project_id,

@@ -12,6 +12,7 @@ const Project_Sprint_Details_Section = () => {
   const [sprintDetails, setSprintDetails] = useState([]); // State to manage sprint details
   const [changedTableRows, setChangedTableRows] = useState([]); // State to track changed table rows
   const [showSaveButton, setShowSaveButton] = useState(false); // State to control visibility of save button
+  const [allowedUsers, setAllowedUsers] = useState([]);
 
   // Retrieve the base URL from environment variables
   const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -44,6 +45,19 @@ const Project_Sprint_Details_Section = () => {
       const { data } = await response.json(); // Parsing response JSON
       // Setting fetched sprint details to state variable
       setSprintDetails(data);
+      const project_id = PATH_NAME.split("/")[2];
+      const allowedUsersResponse = await axios.get(
+        `${BASE_URL}/project-edit-request/${project_id}`
+      );
+      let { data: users } = allowedUsersResponse;
+      users = users.data;
+      users = users.filter((user) => user.status == "approved");
+
+      setAllowedUsers(() => {
+        return users.map((user) => {
+          return user.user_id;
+        });
+      });
     } catch (error) {
       // Displaying error message using toast notification
       toast.error("Some Error");
@@ -71,6 +85,7 @@ const Project_Sprint_Details_Section = () => {
         {/* Render the Table component if sprint details are available */}
         {sprintDetails.length > 0 && (
           <Table
+            allowedUsers={allowedUsers}
             // Default values for the table
             defaultValues={{
               project_id: sprintDetails[0].project_id,

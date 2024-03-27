@@ -12,6 +12,8 @@ const Project_Escalation_Matrix_Section = () => {
   const [changedTableRows, setChangedTableRows] = useState([]); // State for storing changed table rows
   const [showSaveButton, setShowSaveButton] = useState(false); // State to control the visibility of the save button
 
+  const [allowedUsers, setAllowedUsers] = useState([]);
+
   // Retrieve the base URL from environment variables
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   // Extract the current pathname from the URL of the window
@@ -36,6 +38,10 @@ const Project_Escalation_Matrix_Section = () => {
     }
   };
 
+  // useEffect(() => {
+  //   console.log(allowedUsers);
+  // }, [allowedUsers]);
+
   // Function to fetch escalation matrix data from the server
   const fetchData = async () => {
     try {
@@ -44,8 +50,24 @@ const Project_Escalation_Matrix_Section = () => {
       const { data } = await response.json();
       // Setting the fetched escalation matrix data to state variable
       setEscalationMatrix(data);
+
+      const project_id = PATH_NAME.split("/")[2];
+      const allowedUsersResponse = await axios.get(
+        `${BASE_URL}/project-edit-request/${project_id}`
+      );
+      let { data: users } = allowedUsersResponse;
+      users = users.data;
+      users = users.filter((user) => user.status == "approved");
+
+      setAllowedUsers(() => {
+        return users.map((user) => {
+          return user.user_id;
+        });
+      });
+      //console.log(users, allowedUsersResponse);
     } catch (error) {
       // Displaying error message using toast notification
+      console.log(error);
       toast.error("Some Error");
     }
   };
@@ -89,6 +111,7 @@ const Project_Escalation_Matrix_Section = () => {
                   <div key={type} className="table-container">
                     <h2 className="table-heading">{type} Escalation Matrix</h2>
                     <Table
+                      allowedUsers={allowedUsers}
                       sectionTab={"escalation"} // Identifier for the table section
                       changedTableRows={changedTableRows} // State for changed table rows
                       data={filteredData} // Data to be displayed in the table

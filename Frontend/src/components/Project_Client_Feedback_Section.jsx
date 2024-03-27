@@ -10,6 +10,7 @@ const Project_Client_Feedback_Section = () => {
   const [clientFeedback, setClientFeedback] = useState([]); // State to manage stakeholders data
   const [changedTableRows, setChangedTableRows] = useState([]); // State to track changed table rows
   const [showSaveButton, setShowSaveButton] = useState(false); // State to control visibility of save button
+  const [allowedUsers, setAllowedUsers] = useState([]);
 
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const PATH_NAME = new URL(window.location.href).pathname;
@@ -40,6 +41,20 @@ const Project_Client_Feedback_Section = () => {
       const { data } = await response.json(); // Parsing response JSON
       // Setting fetched stakeholders data to state variable
       setClientFeedback(data);
+
+      const project_id = PATH_NAME.split("/")[2];
+      const allowedUsersResponse = await axios.get(
+        `${BASE_URL}/project-edit-request/${project_id}`
+      );
+      let { data: users } = allowedUsersResponse;
+      users = users.data;
+      users = users.filter((user) => user.status == "approved");
+
+      setAllowedUsers(() => {
+        return users.map((user) => {
+          return user.user_id;
+        });
+      });
     } catch (error) {
       // Displaying error message using toast notification
       toast.error("Some Error");
@@ -67,10 +82,11 @@ const Project_Client_Feedback_Section = () => {
         {/* Render the Table component if stakeholders data is available */}
         {clientFeedback.length > 0 && (
           <Table
+            allowedUsers={allowedUsers}
             defaultValues={{
               project_id: clientFeedback[0].project_id,
             }}
-            allowedRoles={["Client"]}
+            allowedRoles={["Admin", "Manager"]}
             sectionTab={"client_feedback"} // Passing section tab as prop
             setShowSaveButton={setShowSaveButton} // Passing setShowSaveButton function as prop
             setChangedTableRows={setChangedTableRows} // Passing setChangedTableRows function as prop

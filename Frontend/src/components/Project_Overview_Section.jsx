@@ -15,6 +15,8 @@ const Project_Overview_Section = () => {
     budget: {},
     timeline: "",
   });
+  const [allowedUsers, setAllowedUsers] = useState([]);
+
   const { auth } = useContext(AuthContext);
   const allowed_roles = ["Admin", "Manager"];
   const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -80,6 +82,20 @@ const Project_Overview_Section = () => {
       // Setting fetched project details to state variable
       console.log(data[0]);
       setProjectDetails(data[0]);
+
+      const project_id = PATH_NAME.split("/")[2];
+      const allowedUsersResponse = await axios.get(
+        `${BASE_URL}/project-edit-request/${project_id}`
+      );
+      let { data: users } = allowedUsersResponse;
+      users = users.data;
+      users = users.filter((user) => user.status == "approved");
+
+      setAllowedUsers(() => {
+        return users.map((user) => {
+          return user.user_id;
+        });
+      });
     } catch (error) {
       // Displaying error message using toast notification
       toast.error("Some Error");
@@ -110,7 +126,12 @@ const Project_Overview_Section = () => {
           <textarea
             value={projectDetails?.overview}
             onChange={(e) => handleInputChange(e, "overview")}
-            readOnly={allowed_roles.includes(auth.role) ? false : true}
+            readOnly={
+              allowed_roles.includes(auth.role) ||
+              allowedUsers.includes(auth.id)
+                ? false
+                : true
+            }
           ></textarea>
         </div>
         <div className="budget-div">
@@ -118,7 +139,12 @@ const Project_Overview_Section = () => {
           <div className="dropdown-div">
             <label>Project Budget</label>
             <Dropdown
-              readOnly={allowed_roles.includes(auth.role) ? false : true}
+              readOnly={
+                allowed_roles.includes(auth.role) ||
+                allowedUsers.includes(auth.id)
+                  ? false
+                  : true
+              }
               className="dropdown"
               value={[
                 {
@@ -149,7 +175,12 @@ const Project_Overview_Section = () => {
                   <label>Duration (in Months)</label>
                   {/* Input field for entering duration */}
                   <input
-                    readOnly={allowed_roles.includes(auth.role) ? false : true}
+                    readOnly={
+                      allowed_roles.includes(auth.role) ||
+                      allowedUsers.includes(auth.id)
+                        ? false
+                        : true
+                    }
                     type="text"
                     onChange={(e) => handleInputChange(e, "Fixed")}
                     value={
@@ -164,7 +195,12 @@ const Project_Overview_Section = () => {
                   <label>Budgeted Hours</label>
                   {/* Input field for entering budgeted hours */}
                   <input
-                    readOnly={allowed_roles.includes(auth.role) ? false : true}
+                    readOnly={
+                      allowed_roles.includes(auth.role) ||
+                      allowedUsers.includes(auth.id)
+                        ? false
+                        : true
+                    }
                     type="text"
                     onChange={(e) => handleInputChange(e, "Monthly")}
                     value={
@@ -181,7 +217,12 @@ const Project_Overview_Section = () => {
         <div className="timeline-div">
           <label>Timeline</label>
           <input
-            readOnly={allowed_roles.includes(auth.role) ? false : true}
+            readOnly={
+              allowed_roles.includes(auth.role) ||
+              allowedUsers.includes(auth.id)
+                ? false
+                : true
+            }
             value={projectDetails.timeline}
             type="text"
             onChange={(e) => handleInputChange(e, "timeline")}

@@ -11,6 +11,7 @@ const Scope_and_Stack_Section = () => {
   // State variables to manage component data and behavior
   const [projectDetails, setProjectDetails] = useState({}); // State to manage project details
   const [changesMade, setChangesMade] = useState(false); // State to track changes made to project details
+  const [allowedUsers, setAllowedUsers] = useState([]);
   const allowed_roles = ["Admin", "Manager"];
   const { auth } = useContext(AuthContext);
 
@@ -80,6 +81,20 @@ const Scope_and_Stack_Section = () => {
       const { data } = await response.json();
       // Setting fetched project details to state variable
       setProjectDetails(data[0]);
+
+      const project_id = PATH_NAME.split("/")[2];
+      const allowedUsersResponse = await axios.get(
+        `${BASE_URL}/project-edit-request/${project_id}`
+      );
+      let { data: users } = allowedUsersResponse;
+      users = users.data;
+      users = users.filter((user) => user.status == "approved");
+
+      setAllowedUsers(() => {
+        return users.map((user) => {
+          return user.user_id;
+        });
+      });
     } catch (error) {
       // Displaying error message using toast notification
       toast.error("Some Error");
@@ -109,7 +124,12 @@ const Scope_and_Stack_Section = () => {
           <label>Select Project's Technology</label>
           {/* Dropdown component for selecting stack */}
           <Dropdown
-            readOnly={allowed_roles.includes(auth.role) ? false : true}
+            readOnly={
+              allowed_roles.includes(auth.role) ||
+              allowedUsers.includes(auth.id)
+                ? false
+                : true
+            }
             searchable={false}
             className="dropdown"
             value={{
@@ -134,7 +154,12 @@ const Scope_and_Stack_Section = () => {
           <label>Scope</label>
           {/* Textarea for entering project scope */}
           <textarea
-            readOnly={allowed_roles.includes(auth.role) ? false : true}
+            readOnly={
+              allowed_roles.includes(auth.role) ||
+              allowedUsers.includes(auth.id)
+                ? false
+                : true
+            }
             value={projectDetails?.scope}
             onChange={(e) => handleInputChange(e, "scope")}
           ></textarea>

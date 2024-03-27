@@ -17,6 +17,7 @@ const Project_Approved_Teams_Section = () => {
   const [categories, setCategories] = useState([]);
   // State variable to manage the active accordion section
   const [activeAccordion, setActiveAccordion] = useState([]);
+  const [allowedUsers, setAllowedUsers] = useState([]);
 
   // Constant storing the base URL obtained from environment variables
   const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -67,6 +68,20 @@ const Project_Approved_Teams_Section = () => {
       const { data } = await response.json();
       // Setting approved teams data
       setApprovedTeams(data);
+
+      const project_id = PATH_NAME.split("/")[2];
+      const allowedUsersResponse = await axios.get(
+        `${BASE_URL}/project-edit-request/${project_id}`
+      );
+      let { data: users } = allowedUsersResponse;
+      users = users.data;
+      users = users.filter((user) => user.status == "approved");
+
+      setAllowedUsers(() => {
+        return users.map((user) => {
+          return user.user_id;
+        });
+      });
     } catch (error) {
       // Displaying error message using toast notification
       toast.error("Some Error");
@@ -121,6 +136,7 @@ const Project_Approved_Teams_Section = () => {
                   >
                     {/* Render Table component */}
                     <Table
+                      allowedUsers={allowedUsers}
                       sectionTab={category} // Pass category as section tab
                       defaultValues={{
                         project_id: approvedTeams[0].project_id,

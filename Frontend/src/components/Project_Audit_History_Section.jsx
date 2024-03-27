@@ -81,6 +81,7 @@ const Project_Audit_History_Section = () => {
             defaultValues={{
               project_id: auditHistory[0].project_id, // Set project_id based on the first item in auditHistory array
             }}
+            
             // Define roles allowed to access this table
             allowedRoles={["Auditor"]}
             // Identifier for the table section

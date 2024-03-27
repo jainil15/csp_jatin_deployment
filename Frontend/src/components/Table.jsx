@@ -15,6 +15,7 @@ const Table = ({
   setShowSaveButton, // Function to toggle save button visibility
   sectionTab, // Current section tab
   allowedRoles = [], //Default Values for allowed roles
+  allowedUsers = [],
 }) => {
   // State variables for rows and columns of the table
   const [rows, setRows] = useState([]);
@@ -179,7 +180,8 @@ const Table = ({
                 {handleColumnName(column)}
               </th>
             ))}
-            {allowedRoles.includes(auth.role) && <th>Actions</th>}
+            {(allowedRoles.includes(auth.role) ||
+              allowedUsers.includes(auth.id)) && <th>Actions</th>}
           </tr>
         </thead>
         <tbody>
@@ -190,7 +192,8 @@ const Table = ({
                   {row.editable ? renderInputField(column, row) : row[column]}
                 </td>
               ))}
-              {allowedRoles.includes(auth.role) && (
+              {(allowedRoles.includes(auth.role) ||
+                allowedUsers.includes(auth.id)) && (
                 <td>
                   {row.editable ? (
                     <div className="action-cell">
@@ -216,7 +219,8 @@ const Table = ({
             </tr>
           ))}
         </tbody>
-        {allowedRoles.includes(auth.role) && (
+        {(allowedRoles.includes(auth.role) ||
+          allowedUsers.includes(auth.id)) && (
           <tfoot>
             <tr>
               <td colSpan={columns.length + 1}>
