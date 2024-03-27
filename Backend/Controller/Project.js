@@ -13,6 +13,7 @@ const client_feedback = require("../Model/Client_Feedback.js");
 const approved_team = require("../Model/Approved_Team.js");
 const mom = require("../Model/MoMs.js");
 const project_updates = require("../Model/Project_Updates.js");
+const edit_requests = require("../Model/EditRequests.js");
 
 // Function to fetch projects associated with a user
 const getUserProjects = async (req, res) => {
@@ -501,6 +502,28 @@ const getProjectUpdates = async (req, res) => {
     res.json({ status: "success", data: data });
   } catch (error) {
     // Send error response if an error occurs
+    res.json({ status: "error" });
+  }
+};
+
+const getEditRequest = async (req, res) => {
+  try {
+    const { user_id } = req.params;
+    const response = await edit_requests.find({ user_id: user_id });
+    res.json({ staus: "success", data: response });
+  } catch (error) {
+    console.log(error);
+    res.json({ status: "error" });
+  }
+};
+
+const getProjectEditRequest = async (req, res) => {
+  try {
+    const { project_id } = req.params;
+    const response = await edit_requests.find({ project_id: project_id });
+    res.json({ staus: "success", data: response });
+  } catch (error) {
+    console.log(error);
     res.json({ status: "error" });
   }
 };
@@ -1145,6 +1168,23 @@ const alterProjectUpdates = async (req, res) => {
     res.json({ status: "error", msg: error }); // Sending error response if any error occurs
   }
 };
+
+const alterEditRequest = async (req, res) => {
+  try {
+    console.log(req.body);
+    const data = req.body[0];
+    const response = await edit_requests.updateOne(
+      { _id: data._id },
+      { $set: data },
+      { upsert: true }
+    );
+    res.json({ status: "success", message: "Request Updated Successfully" });
+  } catch (error) {
+    console.log(error);
+    res.json({ status: "error" });
+  }
+};
+
 // Exporting the functions to be used in other parts of the application
 
 module.exports = {
@@ -1163,6 +1203,8 @@ module.exports = {
   getProjectUpdates, // Retrieves project updates data
   getResources, // Retrieves resources data
   getUserProjects, // Retrieves user projects data
+  getEditRequest,
+  getProjectEditRequest,
 
   // Functions to alter data
   alterProjectDetails, // Alters project details
@@ -1179,4 +1221,5 @@ module.exports = {
   alterProjectUpdates, // Alters project updates data
   alterResources, // Alters resources data
   addProject, // Adds a new project
+  alterEditRequest,
 };
