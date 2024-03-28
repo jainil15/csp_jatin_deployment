@@ -16,7 +16,8 @@ const generateTable = (
   managers, // Array of managers
   handleChange, // Function to handle changes in data
   handleSave, // Function to handle saving data
-  auth // Authentication context
+  auth, // Authentication context
+  handleDelete
 ) => {
   // Define table columns
   const columns = [
@@ -35,8 +36,6 @@ const generateTable = (
     return column_name.split("_").join(" "); // Replaces underscores with spaces
   };
 
-  // Placeholder functions for handling delete and cancel actions
-  const handleDelete = () => {};
   const handleCancel = () => {
     setEditIndex(null);
   };
@@ -181,7 +180,7 @@ const generateTable = (
                       <button onClick={() => handleEdit(rowIndex)}>
                         <i className="fas fa-edit"></i>
                       </button>
-                      <button onClick={() => handleDelete(rowIndex)}>
+                      <button onClick={() => handleDelete(row._id)}>
                         <i className="fas fa-trash-alt"></i>
                       </button>
                     </>
@@ -222,6 +221,30 @@ function NavigationTab({ data, setData }) {
       return row;
     });
     setRows(newRows);
+  };
+
+  const handleDelete = async (project_id) => {
+    try {
+      const delete_confirmation = window.confirm(
+        "Do You Really Want to Delete this Project?"
+      );
+      if (delete_confirmation) {
+        const response = await axios.delete(
+          `${BASE_URL}/project-delete/${project_id}`
+        );
+        if (response.statusText === "OK") {
+          const newRows = rows.filter((row) => row._id !== project_id);
+          console.log(newRows);
+          setData(newRows);
+        }
+
+        toast.success("Project Deleted Successfully");
+
+        //console.log(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // Function to handle saving data
@@ -321,7 +344,8 @@ function NavigationTab({ data, setData }) {
               managers,
               handleChange,
               handleSave,
-              auth
+              auth,
+              handleDelete
             )}
           </>
         )}
@@ -336,7 +360,8 @@ function NavigationTab({ data, setData }) {
               managers,
               handleChange,
               handleSave,
-              auth
+              auth,
+              handleDelete
             )}
           </>
         )}
@@ -351,7 +376,8 @@ function NavigationTab({ data, setData }) {
               managers,
               handleChange,
               handleSave,
-              auth
+              auth,
+              handleDelete
             )}
           </>
         )}
@@ -366,7 +392,8 @@ function NavigationTab({ data, setData }) {
               managers,
               handleChange,
               handleSave,
-              auth
+              auth,
+              handleDelete
             )}
           </>
         )}
