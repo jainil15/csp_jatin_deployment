@@ -31,7 +31,7 @@ const Home = () => {
 
   return (
     <>
-      {associatedProjects?.length > 0 && (
+      {associatedProjects?.length > 0 ? (
         <>
           {/* Project Metrics Section */}
           <div className="project-metrics">
@@ -80,6 +80,10 @@ const Home = () => {
             setData={setAssociatedProjects} // Pass function to update associated projects
           />
         </>
+      ) : (
+        <div className="projects-placeholder">
+          No associated projects found at the moment
+        </div>
       )}
     </>
   );

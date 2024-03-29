@@ -37,3 +37,13 @@
   text-transform: capitalize; /* Capitalizing text */
   font-weight: 400; /* Setting font weight */
 }
+
+.projects-placeholder {
+  display: flex;
+  height: 90%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  font-size: xx-large;
+  font-weight: 550;
+}
