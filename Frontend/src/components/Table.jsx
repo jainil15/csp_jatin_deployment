@@ -81,7 +81,12 @@ const Table = ({
     }
     const updatedRows = rows.map((row) => {
       if (row._id === id) {
-        let changedRow = { ...row, ...defaultValues, action: "added/updated" };
+        let changedRow = {
+          ...row,
+          ...defaultValues,
+          action: "added/updated",
+          edited_by: auth.user.name,
+        };
         delete changedRow["editable"];
         delete changedRow["prevState"];
         setChangedTableRows((prevChangedRows) => [

@@ -19,7 +19,8 @@ const ProtectedRoute = ({ element }) => {
       // Fetching user role from the server
       const res = await fetchRoleOfUser(user.sub);
       // Setting user role in AuthContext
-      setAuth({ id: user.sub, role: res[0].name });
+     
+      setAuth({ id: user.sub, role: res[0].name, user });
     } catch (error) {
       // Displaying error message using toast notification
       toast.error("Some Error");
