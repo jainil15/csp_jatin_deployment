@@ -14,6 +14,7 @@ const approved_team = require("../Model/Approved_Team.js");
 const mom = require("../Model/MoMs.js");
 const project_updates = require("../Model/Project_Updates.js");
 const edit_requests = require("../Model/EditRequests.js");
+const project_changes = require("../Model/ProjectChanges.js");
 
 // Function to fetch projects associated with a user
 const getUserProjects = async (req, res) => {
@@ -100,6 +101,7 @@ const getVersionHistory = async (req, res) => {
         revision_date: "",
         approval_date: "",
         approved_by: "",
+        edited_by: "",
         _id: "",
         __v: "",
       },
@@ -135,6 +137,7 @@ const getAuditHistory = async (req, res) => {
         reviewed_section: "",
         comment: "",
         action_item: "",
+        edited_by: "",
         _id: "",
         __v: "",
       },
@@ -167,6 +170,7 @@ const getStakeholders = async (req, res) => {
         title: "",
         name: "",
         email: "",
+        edited_by: "",
         _id: "",
         __v: "",
       },
@@ -200,6 +204,7 @@ const getEscalationMatrix = async (req, res) => {
         escalation_type: "",
         member: "",
         designation: "",
+        edited_by: "",
         _id: "",
         __v: "",
       },
@@ -236,6 +241,7 @@ const getRiskProfiling = async (req, res) => {
         remedial_steps: "",
         status: "",
         closure_date: "",
+        edited_by: "",
         _id: "",
         __v: "",
       },
@@ -271,6 +277,7 @@ const getPhases = async (req, res) => {
         status: "",
         revised_completion_date: "",
         comments: "",
+        edited_by: "",
         _id: "",
         __v: "",
       },
@@ -305,6 +312,7 @@ const getSprintDetails = async (req, res) => {
         end_date: "",
         status: "",
         comments: "",
+        edited_by: "",
         _id: "",
       },
     ];
@@ -340,6 +348,7 @@ const getResources = async (req, res) => {
         start_date: "",
         end_date: "",
         comment: "",
+        edited_by: "",
       },
     ];
 
@@ -377,6 +386,7 @@ const getMoMs = async (req, res) => {
         duration: "",
         mom_link: "",
         comments: "",
+        edited_by: "",
       },
     ];
 
@@ -414,6 +424,7 @@ const getApprovedTeams = async (req, res) => {
         availability: "",
         duration: "",
         category: "Phase 1",
+        edited_by: "",
       },
     ];
 
@@ -451,6 +462,7 @@ const getClientFeedback = async (req, res) => {
         detailed_feedback: "",
         action_taken: "",
         closure_date: "",
+        edited_by: "",
       },
     ];
 
@@ -485,6 +497,7 @@ const getProjectUpdates = async (req, res) => {
         project_id: id,
         date: "",
         general_updates: "",
+        edited_by: "",
       },
     ];
 
@@ -1219,6 +1232,19 @@ const deleteProject = async (req, res) => {
   }
 };
 
+const addProjectChanges = async (req, res) => {
+  try {
+    const { project_id } = req.params;
+    const project_change = req.body;
+    const response = await project_changes.create({ ...project_change });
+    console.log(response);
+    res.json({ status: "success" });
+  } catch (error) {
+    console.log(error);
+    res.json({ status: "error" });
+  }
+};
+
 // Exporting the functions to be used in other parts of the application
 
 module.exports = {
@@ -1256,6 +1282,6 @@ module.exports = {
   alterResources, // Alters resources data
   addProject, // Adds a new project
   alterEditRequest,
-
+  addProjectChanges,
   deleteProject,
 };
