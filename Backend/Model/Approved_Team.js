@@ -24,6 +24,9 @@ const Approved_Team_Schema = new mongoose.Schema({
   category: {
     type: String,
   },
+  edited_by:{
+    type:String
+  }
 });
 
 // Exporting the Project model, using the defined schema, as a Mongoose model named "Project"

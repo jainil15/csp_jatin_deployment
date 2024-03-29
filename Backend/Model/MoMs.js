@@ -21,6 +21,9 @@ const MoMs_Schema = new mongoose.Schema({
   comments: {
     type: String,
   },
+  edited_by:{
+    type:String
+  }
 });
 
 // Exporting the Project model, using the defined schema, as a Mongoose model named "Project"

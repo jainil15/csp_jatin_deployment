@@ -52,6 +52,9 @@ const Risk_Profiling_Schema = new mongoose.Schema({
     // Validation rule: Closure date is required
     required: [true, "please provide closure date"],
   },
+  edited_by:{
+    type:String
+  }
 });
 
 // Exporting the Risk_Profiling model, using the defined schema, as a Mongoose model named "Risk_Profiling"

@@ -40,6 +40,9 @@ const Sprint_Details_Schema = new mongoose.Schema({
     // Validation rule: Comments are required
     required: [true, "please provide comments"],
   },
+  edited_by:{
+    type:String
+  }
 });
 
 // Exporting the Sprint_Details model, using the defined schema, as a Mongoose model named "Sprint_Details"

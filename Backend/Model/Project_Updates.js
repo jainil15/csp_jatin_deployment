@@ -15,6 +15,9 @@ const Project_Updates_Schema = new mongoose.Schema({
   general_updates: {
     type: String,
   },
+  edited_by:{
+    type:String
+  }
 });
 
 // Exporting the Project model, using the defined schema, as a Mongoose model named "Project"

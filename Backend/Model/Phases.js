@@ -45,6 +45,9 @@ const Phases_Schema = new mongoose.Schema({
     type: String,
     required: [true, "please provide comment"],
   },
+  edited_by:{
+    type:String
+  }
 });
 
 // Exporting the Phases model, using the defined schema, as a Mongoose model named "Phases"

@@ -30,6 +30,9 @@ const Escalation_Matrix_Schema = new mongoose.Schema({
     type: String,
     required: [true, "please provide available members"],
   },
+  edited_by:{
+    type:String
+  }
 });
 
 // Exporting the Escalation_Matrix model, using the defined schema, as a Mongoose model named "Escalation_Matrix"
