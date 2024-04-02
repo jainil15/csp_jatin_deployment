@@ -91,7 +91,7 @@ const sendMail = async (req, res) => {
     // Fetching stakeholders data
     const { id } = req.params;
     const response = await fetch(
-      `http:localhost:8000/project/${id}/stakeholders`
+      `http:cspjatin.centralindia.cloudapp.azure.com:9002/api/project/${id}/stakeholders`
     );
     const { data } = await response.json();
     // Creating nodemailer transporter

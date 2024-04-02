@@ -17,7 +17,7 @@ root.render(
       clientId="Gfzgtz5ShwPET8TzVUWsmJFHWbV7BFI9"
       audience="https://dev-34crl0ebsqxu7bk8.us.auth0.com/api/v2/"
       authorizationParams={{
-        redirect_uri: "http://localhost:3000/",
+        redirect_uri: "https://cspjatin.centralindia.cloudapp.azure.com:9001/",
       }}
     >
       {/* AuthProvider for managing authentication context */}

@@ -10,7 +10,7 @@ const addProjectDetailsPage = async (filename, doc, id) => {
   try {
     // Fetching project details data from the server
     let response = await fetch(
-      `http:localhost:8000/project/${id}/project_details`
+      `http:cspjatin.centralindia.cloudapp.azure.com:9002/api/project/${id}/project_details`
     );
     let { data } = await response.json();
     data = data[0]; // Extracting first element as project details
@@ -66,7 +66,9 @@ const addProjectTablesPage = async (filename, doc, id) => {
 
     // Looping through each route to fetch and add data to the PDF
     for (const route of routes) {
-      let response = await fetch(`http:localhost:8000/${route}`);
+      let response = await fetch(
+        `http:cspjatin.centralindia.cloudapp.azure.com:9002/api/${route}`
+      );
       let { data } = await response.json();
       let invalidColumns = ["_id", "__v", "project_id"];
       let objKeys = Object.keys(data[0]).filter(

@@ -57,6 +57,7 @@ const addProject = async (req, res) => {
     res.json({ status: "success" });
   } catch (error) {
     // If an error occurs, send error response
+    console.log(error);
     res.json({ status: "success", message: "Internal Server Error" });
   }
 };
