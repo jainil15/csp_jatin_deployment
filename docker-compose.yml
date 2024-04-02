@@ -1,0 +1,40 @@
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - /data/db:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: jainil115
+    restart: unless-stopped
+    networks:
+      - jatinnet
+
+  client:
+    build: ./Frontend
+    image: jainilp12/jatin-frontend
+    container_name: client2
+    ports:
+      - "9001:443"
+    restart: unless-stopped
+    networks:
+      - jatinnet
+
+  server:
+    build: ./Backend
+    image: jainilp12/jatin-backend
+    container_name: server2
+    ports:
+      - "9002:8000"
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+    networks:
+      - jatinnet
+
+networks:
+  jatinnet:
+    driver: bridge

@@ -1,0 +1,6 @@
+FROM node:lts-alpine3.19
+WORKDIR /App
+COPY package.json ./
+RUN npm install
+COPY . ./
+CMD ["node", "server.js"]
